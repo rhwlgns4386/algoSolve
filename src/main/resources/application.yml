@@ -1,0 +1,7 @@
+spring:
+  application:
+    name : algoSolve
+  profiles:
+    include: token
+  jpa:
+    open-in-view: false
