@@ -1,12 +1,6 @@
 package org.example.algosolve.user.token;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -17,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.crypto.SecretKey;
 import org.example.algosolve.user.util.DateUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -25,8 +20,17 @@ public class HS256JwtBuilderProvider {
 
     private final Key secret;
 
+    @Autowired
     public HS256JwtBuilderProvider(@Value("${jwt.key}") String secret) {
-        this.secret = toKey(secret);
+        this(toKey(secret));
+    }
+
+    public HS256JwtBuilderProvider(Key key){
+        this.secret=key;
+    }
+
+    private static SecretKey toKey(String secret) {
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
     JwtBuilder builder(){
@@ -36,14 +40,9 @@ public class HS256JwtBuilderProvider {
                 .signWith(secret, SignatureAlgorithm.HS256);
     }
 
-    private SecretKey toKey(String secret) {
-        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-    }
-
-    public Claims claims(String token) {
+    JwtParser parser(){
         return  Jwts.parserBuilder()
                 .setSigningKey(secret)
-                .build()
-                .parseClaimsJws(token).getBody();
+                .build();
     }
 }

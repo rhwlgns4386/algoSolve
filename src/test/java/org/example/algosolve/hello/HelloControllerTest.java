@@ -38,7 +38,7 @@ class HelloControllerTest {
     @Test
     public void hello가_반환된다() throws Exception {
         String token = tokenProvider.createAccessToken(LocalDateTime.now(), "test");
-        mvc.perform(get("/hello").header(HttpHeaders.AUTHORIZATION,"Bearer "+token))
+        mvc.perform(get("/hello").header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(content().string("hello"));
     }
