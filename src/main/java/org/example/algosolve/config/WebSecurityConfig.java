@@ -75,7 +75,7 @@ public class WebSecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowCredentials(false);
+        config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000");
         config.setAllowedMethods(List.of("*"));
         config.setExposedHeaders(List.of("*"));
