@@ -79,7 +79,7 @@ public class WebSecurityConfig {
         config.addAllowedOrigin("http://localhost:3000");
         config.setAllowedMethods(List.of("*"));
         config.setExposedHeaders(List.of("*"));
-        config.setAllowedHeaders(List.of("token","Authorization","Content-Type", "Accept"));
+        config.setAllowedHeaders(List.of("*"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
