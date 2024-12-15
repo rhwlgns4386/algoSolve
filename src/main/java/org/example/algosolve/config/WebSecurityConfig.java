@@ -1,5 +1,6 @@
 package org.example.algosolve.config;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.example.algosolve.user.domain.UserRepository;
 import org.example.algosolve.user.security.JpaUserDetailService;
@@ -20,6 +21,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -68,13 +72,19 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowedMethods("*");
-            }
-        };
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowCredentials(false);
+        config.addAllowedOrigin("http://localhost:3000");
+        config.setAllowedMethods(List.of("*"));
+        config.setExposedHeaders(List.of("*"));
+        config.setAllowedHeaders(List.of("token","Authorization","Content-Type", "Accept"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+
+        return source;
     }
     private static void defaultHttpSecurity(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
