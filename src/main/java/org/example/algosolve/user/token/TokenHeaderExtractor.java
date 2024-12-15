@@ -20,13 +20,13 @@ public class TokenHeaderExtractor {
         if(data!=null){
             return data;
         }
-        throw new BadCredentialsException("Authorization에 토큰이 존재 하지 않습니다");
+        throw new IllegalArgumentException(String.format("%s에 토큰이 존재 하지 않습니다",TOKEN_HEADER));
     }
 
     private static String extractToken(String data) {
         if(data.startsWith(TOKEN_PREFIX)){
             return data.substring(7);
         }
-        throw new BadCredentialsException("Bearer로 시작하지 않습니다");
+        throw new IllegalArgumentException(String.format("%s로 시작하지 않습니다",TOKEN_PREFIX));
     }
 }

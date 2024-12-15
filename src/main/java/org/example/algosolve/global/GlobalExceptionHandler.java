@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.algosolve.exception.ConflictException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,6 +24,13 @@ public class GlobalExceptionHandler {
         ErrorResponse response = ErrorResponse.of(HttpStatus.CONFLICT.value(), accessDeniedException.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
+
+    @ExceptionHandler(AuthenticationException.class)
+    ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException accessDeniedException) {
+        ErrorResponse response = ErrorResponse.of(HttpStatus.UNAUTHORIZED.value(), accessDeniedException.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
 
     @ExceptionHandler(ConflictException.class)
     ResponseEntity<ErrorResponse> handleConflictException(ConflictException conflictException) {
