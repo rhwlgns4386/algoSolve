@@ -9,9 +9,6 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.algosolve.user.dto.IdPasswordDto;
-import org.example.algosolve.user.service.UserData;
-import org.springframework.security.authentication.BadCredentialsException;
 
 @Entity
 @Table(name = "users")
@@ -26,6 +23,7 @@ public class User {
     private Password password;
     private int level;
     private String githubUrl;
+    private String refreshToken;
     private LocalDateTime localDateTime;
 
     public User(String userId, String password, int level, UserPasswordEncoder userPasswordEncoder) {
@@ -40,18 +38,15 @@ public class User {
         this.localDateTime = LocalDateTime.now();
     }
 
-    public UserData login(String password,UserPasswordEncoder passwordEncoder) {
-        if (!matchPassword(password, passwordEncoder)) {
-            throw new BadCredentialsException("비밀 번호가 일치하지 않습니다");
-        }
-        return new UserData(userId);
-    }
-
-    private boolean matchPassword(String value, UserPasswordEncoder userPasswordEncoder) {
-        return password.match(value, userPasswordEncoder);
+    public boolean matchPassword(String password,UserPasswordEncoder userPasswordEncoder){
+        return this.password.match(password,userPasswordEncoder);
     }
 
     public String getPassword() {
         return password.getPassword();
+    }
+
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }

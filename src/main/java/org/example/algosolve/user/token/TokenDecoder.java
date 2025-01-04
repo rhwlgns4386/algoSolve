@@ -2,7 +2,9 @@ package org.example.algosolve.user.token;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TokenDecoder {
     private final HS256JwtBuilderProvider jwtBuilderProvider;
     public TokenDecoder(HS256JwtBuilderProvider jwtProvider) {

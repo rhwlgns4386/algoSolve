@@ -4,18 +4,17 @@ import jakarta.persistence.Embeddable;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public final class Password {
     private String password;
 
-    public Password(String password,UserPasswordEncoder userPasswordEncoder) {
+    public Password(String password, UserPasswordEncoder userPasswordEncoder) {
         this.password = userPasswordEncoder.encode(password);
     }
 
-    public boolean match(String input,UserPasswordEncoder passwordEncoder) {
+    public boolean match(String input, UserPasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(input, password);
     }
 

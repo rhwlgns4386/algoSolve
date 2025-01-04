@@ -3,7 +3,6 @@ package org.example.algosolve.user.token;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.security.authentication.BadCredentialsException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -26,7 +25,7 @@ public class TokenHeaderExtractorTest {
     void 헤더가_존재하지_않으면_예외(){
         MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
 
-        assertThatThrownBy(()->extract(mockHttpServletRequest)).isInstanceOf(BadCredentialsException.class);
+        assertThatThrownBy(()->extract(mockHttpServletRequest)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -35,6 +34,6 @@ public class TokenHeaderExtractorTest {
         String token="token";
         mockHttpServletRequest.addHeader(HttpHeaders.AUTHORIZATION,token);
 
-        assertThatThrownBy(()->extract(mockHttpServletRequest)).isInstanceOf(BadCredentialsException.class);
+        assertThatThrownBy(()->extract(mockHttpServletRequest)).isInstanceOf(IllegalArgumentException.class);
     }
 }
