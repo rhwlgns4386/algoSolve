@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import static org.example.algosolve.user.util.DateUtil.toDate;
 
@@ -22,6 +23,7 @@ public class TokenEncoder {
 
     public String accessToken(LocalDateTime now, String id) {
         return hs256JwtBuilderProvider.builder()
+                .setClaims(Map.of("token_type",TokenType.ACCESS_TOKEN))
                 .setSubject(id)
                 .setIssuedAt(toDate(now))
                 .setExpiration(accessTokenExpireMinute.calculateExpirationDate(now))
@@ -30,6 +32,7 @@ public class TokenEncoder {
 
     public String refresh(LocalDateTime now, String id) {
         return hs256JwtBuilderProvider.builder()
+                .setClaims(Map.of("token_type",TokenType.REFRESH_TOKEN))
                 .setSubject(id)
                 .setIssuedAt(toDate(now))
                 .setExpiration(refreshTokenExpireMinute.calculateExpirationDate(now))

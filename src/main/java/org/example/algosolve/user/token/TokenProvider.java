@@ -50,6 +50,12 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(claims.getSubject(), null, Collections.emptyList());
     }
 
+    public TokenType extractTokenType(String token) {
+        Claims claims = getClaims(token);
+        String tokenType = (String)claims.get("token_type");
+        return TokenType.from(tokenType);
+    }
+
     private Claims getClaims(String token) {
         try{
             return tokenDecoder.decode(token);
