@@ -45,6 +45,8 @@ class AuthControllerTest {
     @Autowired
     private TokenEncoder tokenEncoder;
 
+    private static final User TEST_USER = new User("test1", "testPassword","test" ,1,new TestUserPasswordEncoder());
+
     @Test
     void 회원가입_테스트() throws Exception {
         String userId = "test1";
@@ -60,7 +62,7 @@ class AuthControllerTest {
 
     @Test
     void 이미_사용중인_아이디이면_예외() throws Exception {
-        userRepository.save(new User("test1", "testPassword", 1,new TestUserPasswordEncoder()));
+        userRepository.save(TEST_USER);
         String content = createSignupContent("test1", "testPassword", "testPassword", 1);
 
         mockMvc.perform(post(SIGNUP_PATH).contentType(MediaType.APPLICATION_PROBLEM_JSON).content(content))
@@ -71,7 +73,7 @@ class AuthControllerTest {
     void 로그인_테스트() throws Exception {
         String userId = "test1";
         String password = "testPassword";
-        userRepository.save(new User(userId, password, 1,new TestUserPasswordEncoder()));
+        userRepository.save(TEST_USER);
 
         IdPasswordDto idPasswordDto = new IdPasswordDto(userId, password);
 
@@ -86,7 +88,7 @@ class AuthControllerTest {
     void 로그인_실패_테스트() throws Exception {
         String userId = "test1";
         String password = "testPassword";
-        userRepository.save(new User(userId, password, 1,new TestUserPasswordEncoder()));
+        userRepository.save(TEST_USER);
 
         IdPasswordDto idPasswordDto = new IdPasswordDto(userId, password+"1");
 
@@ -96,9 +98,7 @@ class AuthControllerTest {
 
     @Test
     void 엑세스토큰_재발급() throws Exception {
-        String userId = "test1";
-        String password = "testPassword";
-        User user = userRepository.save(new User(userId, password, 1, new TestUserPasswordEncoder()));
+        User user = userRepository.save(TEST_USER);
 
         String refresh = tokenEncoder.refresh(LocalDateTime.now(), user.getUserId());
         user.updateRefreshToken(refresh);
@@ -111,9 +111,7 @@ class AuthControllerTest {
 
     @Test
     void 액세스토큰_발급불가() throws Exception {
-        String userId = "test1";
-        String password = "testPassword";
-        User user = userRepository.save(new User(userId, password, 1, new TestUserPasswordEncoder()));
+        User user = userRepository.save(TEST_USER);
 
         String refresh = tokenEncoder.refresh(LocalDateTime.now(), user.getUserId());
         user.updateRefreshToken(refresh);

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.example.algosolve.user.domain.UserPasswordEncoder;
 import org.example.algosolve.user.dto.validate.PasswordCheck;
 import org.example.algosolve.user.domain.User;
@@ -21,15 +23,18 @@ public class SignupDto {
     @Max(value = 5, message = "레벨은 5이하이여야 합니다")
     private int level;
     private String gitUrl;
+    @NotNull
+    private String nickName;
 
-    public SignupDto(String userId, String password, String passwordCheck, int level, String gitUrl) {
+    public SignupDto(String userId, String password, String passwordCheck, String nickName ,int level, String gitUrl) {
         this.credentials = new Credentials(userId, password, passwordCheck);
         this.level = level;
         this.gitUrl = gitUrl;
+        this.nickName = nickName;
     }
 
     public User toEntity(UserPasswordEncoder passwordEncoder) {
-        return new User(getUserId(), getPassword(), level, gitUrl, passwordEncoder);
+        return new User(getUserId(), getPassword(), nickName, level, gitUrl, passwordEncoder);
     }
 
     public String getPassword() {
