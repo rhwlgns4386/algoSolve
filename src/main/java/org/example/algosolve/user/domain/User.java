@@ -21,6 +21,7 @@ public class User {
     private String userId;
     @Embedded
     private Password password;
+    @Getter
     private String nickName;
     private int level;
     private String githubUrl;
@@ -51,4 +52,5 @@ public class User {
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
+
 }

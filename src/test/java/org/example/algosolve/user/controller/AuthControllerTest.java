@@ -121,9 +121,7 @@ class AuthControllerTest {
 
     @Test
     void 엑세스토큰전달시_예외() throws Exception {
-        String userId = "test1";
-        String password = "testPassword";
-        User user = userRepository.save(new User(userId, password, 1, new TestUserPasswordEncoder()));
+        User user = userRepository.save(TEST_USER);
 
         String accessToken = tokenEncoder.accessToken(LocalDateTime.now(), user.getUserId());
         mockMvc.perform(get(ISSUE_ACCESS_TOKEN).header(HttpHeaders.AUTHORIZATION,"Bearer "+ accessToken))

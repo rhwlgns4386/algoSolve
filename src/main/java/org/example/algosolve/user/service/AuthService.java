@@ -22,14 +22,14 @@ public class AuthService {
     private final UserPasswordEncoder passwordEncoder;
     private final TokenEncoder tokenEncoder;
 
-    public TokenInfo login(LocalDateTime now, String id, String password){
+    public LoginInfo login(LocalDateTime now, String id, String password){
         User user = userRepository.findUserByUserId(id).orElseThrow(() -> new InternalAuthenticationServiceException("사용자를 찾을 수 없습니다."));
         if(!user.matchPassword(password, passwordEncoder)){
             throw new BadCredentialsException("인증 정보가 일치 하지 않습니다.");
         }
         String refreshToken = tokenEncoder.refresh(now, id);
         user.updateRefreshToken(refreshToken);
-        return new TokenInfo(refreshToken,tokenEncoder.accessToken(now,id));
+        return new LoginInfo(refreshToken,tokenEncoder.accessToken(now,id),user.getNickName());
     }
 
     public void signup(SignupDto signupDto) {

@@ -22,18 +22,18 @@ public class TokenHeaderExtractorTest {
     }
 
     @Test
-    void 헤더가_존재하지_않으면_예외(){
+    void 헤더가_존재하지_않으면_null(){
         MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
 
-        assertThatThrownBy(()->extract(mockHttpServletRequest)).isInstanceOf(IllegalArgumentException.class);
+        assertThat(extract(mockHttpServletRequest)).isNull();
     }
 
     @Test
-    void prefix가_않으면_예외(){
+    void prefix가_않으면_null(){
         MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
         String token="token";
         mockHttpServletRequest.addHeader(HttpHeaders.AUTHORIZATION,token);
 
-        assertThatThrownBy(()->extract(mockHttpServletRequest)).isInstanceOf(IllegalArgumentException.class);
+        assertThat(extract(mockHttpServletRequest)).isNull();
     }
 }
