@@ -121,6 +121,17 @@ class AuthControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
+    @Test
+    void 엑세스토큰전달시_예외() throws Exception {
+        String userId = "test1";
+        String password = "testPassword";
+        User user = userRepository.save(new User(userId, password, 1, new TestUserPasswordEncoder()));
+
+        String accessToken = tokenEncoder.accessToken(LocalDateTime.now(), user.getUserId());
+        mockMvc.perform(get(ISSUE_ACCESS_TOKEN).header(HttpHeaders.AUTHORIZATION,"Bearer "+ accessToken))
+                .andExpect(status().isBadRequest());
+    }
+
     private static String createSignupContent(String userId, String password, String passwordCheck, int level)
             throws JsonProcessingException {
         return toString(signupDto(userId, password, passwordCheck, level));

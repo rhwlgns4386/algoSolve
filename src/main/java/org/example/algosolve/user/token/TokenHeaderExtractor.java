@@ -1,7 +1,6 @@
 package org.example.algosolve.user.token;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.security.authentication.BadCredentialsException;
 
 public class TokenHeaderExtractor {
 
@@ -16,17 +15,19 @@ public class TokenHeaderExtractor {
     }
 
     private static String headerData(HttpServletRequest request) {
+        if(request==null) return null;
         String data = request.getHeader(TOKEN_HEADER);
         if(data!=null){
             return data;
         }
-        throw new IllegalArgumentException(String.format("%s에 토큰이 존재 하지 않습니다",TOKEN_HEADER));
+        return null;
     }
 
     private static String extractToken(String data) {
+        if(data==null) return null;
         if(data.startsWith(TOKEN_PREFIX)){
             return data.substring(7);
         }
-        throw new IllegalArgumentException(String.format("%s로 시작하지 않습니다",TOKEN_PREFIX));
+        return null;
     }
 }
