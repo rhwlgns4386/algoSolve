@@ -21,18 +21,20 @@ public class User {
     private String userId;
     @Embedded
     private Password password;
+    private String nickName;
     private int level;
     private String githubUrl;
     private String refreshToken;
     private LocalDateTime localDateTime;
 
-    public User(String userId, String password, int level, UserPasswordEncoder userPasswordEncoder) {
-        this(userId, password, level, "", userPasswordEncoder);
+    public User(String userId, String password,String nickName ,int level, UserPasswordEncoder userPasswordEncoder) {
+        this(userId, password, nickName, level ,"", userPasswordEncoder);
     }
 
-    public User(String userId, String password, int level, String githubUrl, UserPasswordEncoder userPasswordEncoder) {
+    public User(String userId, String password,String nickName ,int level, String githubUrl, UserPasswordEncoder userPasswordEncoder) {
         this.userId = userId;
         this.password = new Password(password, userPasswordEncoder);
+        this.nickName = nickName;
         this.level = level;
         this.githubUrl = githubUrl;
         this.localDateTime = LocalDateTime.now();
