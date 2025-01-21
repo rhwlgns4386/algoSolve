@@ -8,7 +8,7 @@ import org.example.algosolve.user.domain.UserRepository;
 import org.example.algosolve.user.security.ExceptionHandleFilter;
 import org.example.algosolve.user.security.JpaUserDetailService;
 import org.example.algosolve.user.security.JwtAuthenticationFilter;
-import org.example.algosolve.user.token.TokenProvider;
+import org.example.algosolve.user.controller.TokenProvider;
 import org.example.algosolve.user.token.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -21,11 +21,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -57,10 +55,9 @@ public class WebSecurityConfig implements WebMvcConfigurer{
     public SecurityFilterChain securityAuthFilterChain(HttpSecurity httpSecurity) throws Exception {
         defaultHttpSecurity(httpSecurity);
 
-        httpSecurity.securityMatcher("/auth/**");
+        httpSecurity.securityMatcher("/auth/**","/swagger-ui/**","/v3/api-docs/**");
         httpSecurity.authorizeHttpRequests(
-                (auth) -> auth.requestMatchers("/auth/**")
-                        .permitAll().anyRequest().authenticated());
+                (auth) -> auth.anyRequest().permitAll());
         return httpSecurity.build();
     }
 

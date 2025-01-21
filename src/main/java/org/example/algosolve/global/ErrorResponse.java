@@ -11,12 +11,12 @@ public class ErrorResponse {
     private int status;
     @JsonUnwrapped
     private ErrorMessage errorMessage;
-    private LocalDateTime timestamp;
+    private LocalDateTime occurredAt;
 
     private ErrorResponse(int status, ErrorMessage errorMessage) {
         this.status = status;
         this.errorMessage = errorMessage;
-        this.timestamp = LocalDateTime.now();
+        this.occurredAt = LocalDateTime.now();
     }
 
     static ErrorResponse of(int status, String message) {
