@@ -35,6 +35,7 @@ class AuthControllerTest {
 
     private static final String SIGNUP_PATH = "/auth/signup";
     private static final String LOGIN_PATH = "/auth/login";
+    private static final String ID_CHECK = "/auth/checkId";
 
     private static final String ISSUE_ACCESS_TOKEN = "/auth/issued_access_token";
     @Autowired
@@ -46,6 +47,7 @@ class AuthControllerTest {
     private TokenEncoder tokenEncoder;
 
     private static final User TEST_USER = new User("test1", "testPassword","test" ,1,new TestUserPasswordEncoder());
+
 
     @Test
     void 회원가입_테스트() throws Exception {
@@ -126,6 +128,14 @@ class AuthControllerTest {
         String accessToken = tokenEncoder.accessToken(LocalDateTime.now(), user.getUserId());
         mockMvc.perform(get(ISSUE_ACCESS_TOKEN).header(HttpHeaders.AUTHORIZATION,"Bearer "+ accessToken))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void 아이디_체크() throws Exception {
+        userRepository.save(TEST_USER);
+        IdDto idDto = new IdDto("testuser2");
+        mockMvc.perform(get(ID_CHECK).content(objectMapper.writeValueAsString(idDto)))
+                .andExpect(status().isOk());
     }
 
     private static String createSignupContent(String userId, String password, String passwordCheck, int level)
