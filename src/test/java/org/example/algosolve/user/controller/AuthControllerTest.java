@@ -15,7 +15,9 @@ import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import org.example.algosolve.user.TestUserPasswordEncoder;
+
+import org.example.algosolve.user.TestUser;
+import org.example.algosolve.user.dto.IdDto;
 import org.example.algosolve.user.dto.IdPasswordDto;
 import org.example.algosolve.user.domain.User;
 import org.example.algosolve.user.domain.UserRepository;
@@ -46,9 +48,6 @@ class AuthControllerTest {
     @Autowired
     private TokenEncoder tokenEncoder;
 
-    private static final User TEST_USER = new User("test1", "testPassword","test" ,1,new TestUserPasswordEncoder());
-
-
     @Test
     void 회원가입_테스트() throws Exception {
         String userId = "test1";
@@ -64,18 +63,18 @@ class AuthControllerTest {
 
     @Test
     void 이미_사용중인_아이디이면_예외() throws Exception {
-        userRepository.save(TEST_USER);
+        userRepository.save(TestUser.USER);
         String content = createSignupContent("test1", "testPassword", "testPassword", 1);
 
         mockMvc.perform(post(SIGNUP_PATH).contentType(MediaType.APPLICATION_PROBLEM_JSON).content(content))
-                .andExpect(status().isConflict()).andDo(print());
+                .andExpect(status().isUnauthorized()).andDo(print());
     }
 
     @Test
     void 로그인_테스트() throws Exception {
         String userId = "test1";
         String password = "testPassword";
-        userRepository.save(TEST_USER);
+        userRepository.save(TestUser.USER);
 
         IdPasswordDto idPasswordDto = new IdPasswordDto(userId, password);
 
@@ -90,7 +89,7 @@ class AuthControllerTest {
     void 로그인_실패_테스트() throws Exception {
         String userId = "test1";
         String password = "testPassword";
-        userRepository.save(TEST_USER);
+        userRepository.save(TestUser.USER);
 
         IdPasswordDto idPasswordDto = new IdPasswordDto(userId, password+"1");
 
@@ -100,7 +99,7 @@ class AuthControllerTest {
 
     @Test
     void 엑세스토큰_재발급() throws Exception {
-        User user = userRepository.save(TEST_USER);
+        User user = userRepository.save(TestUser.USER);
 
         String refresh = tokenEncoder.refresh(LocalDateTime.now(), user.getUserId());
         user.updateRefreshToken(refresh);
@@ -113,7 +112,7 @@ class AuthControllerTest {
 
     @Test
     void 액세스토큰_발급불가() throws Exception {
-        User user = userRepository.save(TEST_USER);
+        User user = userRepository.save(TestUser.USER);
 
         String refresh = tokenEncoder.refresh(LocalDateTime.now(), user.getUserId());
         user.updateRefreshToken(refresh);
@@ -123,7 +122,7 @@ class AuthControllerTest {
 
     @Test
     void 엑세스토큰전달시_예외() throws Exception {
-        User user = userRepository.save(TEST_USER);
+        User user = userRepository.save(TestUser.USER);
 
         String accessToken = tokenEncoder.accessToken(LocalDateTime.now(), user.getUserId());
         mockMvc.perform(get(ISSUE_ACCESS_TOKEN).header(HttpHeaders.AUTHORIZATION,"Bearer "+ accessToken))
@@ -131,11 +130,25 @@ class AuthControllerTest {
     }
 
     @Test
-    void 아이디_체크() throws Exception {
-        userRepository.save(TEST_USER);
+    void 아이디_체크_성공() throws Exception {
+        userRepository.save(TestUser.USER);
         IdDto idDto = new IdDto("testuser2");
-        mockMvc.perform(get(ID_CHECK).content(objectMapper.writeValueAsString(idDto)))
+        mockMvc.perform(post(ID_CHECK)
+                        .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+                        .content(objectMapper.writeValueAsString(idDto))
+                )
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void 아이디_체크_실패() throws Exception {
+        userRepository.save(TestUser.USER);
+        IdDto idDto = new IdDto(TestUser.USER.getUserId());
+        mockMvc.perform(post(ID_CHECK)
+                        .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+                        .content(objectMapper.writeValueAsString(idDto))
+                )
+                .andExpect(status().isUnauthorized());
     }
 
     private static String createSignupContent(String userId, String password, String passwordCheck, int level)

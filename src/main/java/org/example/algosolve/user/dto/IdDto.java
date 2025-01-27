@@ -1,0 +1,15 @@
+package org.example.algosolve.user.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class IdDto {
+    private String id;
+
+    public IdDto(String id) {
+        this.id = id;
+    }
+}
