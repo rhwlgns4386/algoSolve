@@ -5,7 +5,7 @@ import org.example.algosolve.user.domain.User;
 import org.example.algosolve.user.domain.UserPasswordEncoder;
 import org.example.algosolve.user.domain.UserRepository;
 import org.example.algosolve.user.dto.SignupDto;
-import org.example.algosolve.user.exeption.DuplicateUserIdException;
+import org.example.algosolve.user.exception.DuplicateUserIdException;
 import org.example.algosolve.user.token.TokenEncoder;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -50,5 +50,9 @@ public class AuthService {
     private boolean isUserToken(String id, String refreshToken){
         Optional<User> user = userRepository.findUserByUserIdAndRefreshToken(id,refreshToken);
         return user.isPresent();
+    }
+
+    public boolean containId(String userId) {
+        return userRepository.existsByUserId(userId);
     }
 }
