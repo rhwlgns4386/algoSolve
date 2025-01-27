@@ -5,3 +5,8 @@ spring:
     include: token
   jpa:
     open-in-view: false
+springdoc:
+  swagger-ui:
+    groups-order: ASC
+    tags-sorter: alpha
+    operations-sorter: method

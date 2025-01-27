@@ -1,4 +1,4 @@
-package org.example.algosolve.user.token;
+package org.example.algosolve.user.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 

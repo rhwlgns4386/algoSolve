@@ -5,7 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import org.example.algosolve.user.token.TokenProvider;
+import org.example.algosolve.user.controller.TokenProvider;
 import org.example.algosolve.user.token.TokenType;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;

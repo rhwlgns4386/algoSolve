@@ -6,7 +6,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.example.algosolve.user.token.TokenHeaderExtractor.extract;
+import static org.example.algosolve.user.controller.TokenHeaderExtractor.extract;
 
 public class TokenHeaderExtractorTest {
 

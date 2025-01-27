@@ -1,6 +1,6 @@
-package org.example.algosolve.user.token;
+package org.example.algosolve.user.controller;
 
-import static org.example.algosolve.user.token.TokenHeaderExtractor.extract;
+import static org.example.algosolve.user.controller.TokenHeaderExtractor.extract;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -13,6 +13,9 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 import lombok.RequiredArgsConstructor;
+import org.example.algosolve.user.token.TokenDecoder;
+import org.example.algosolve.user.token.TokenEncoder;
+import org.example.algosolve.user.token.TokenType;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
