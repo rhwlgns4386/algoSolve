@@ -33,7 +33,7 @@ public class AuthService {
     }
 
     public void signup(SignupDto signupDto) {
-        if (userRepository.existsByUserId(signupDto.getUserId())) {
+        if (containId(signupDto.getUserId())) {
             throw new DuplicateUserIdException();
         }
         User user = signupDto.toEntity(passwordEncoder);
