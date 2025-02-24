@@ -7,6 +7,8 @@ import org.example.algosolve.platform.ProblemStateDto;
 import org.example.algosolve.problem_result.entity.ProblemResult;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @RequiredArgsConstructor
 @Service
 public class ProblemResultJpaService implements ProblemResultService {
@@ -16,7 +18,8 @@ public class ProblemResultJpaService implements ProblemResultService {
     @Transactional
     @Override
     public void save(ProblemStateDto problemStateDto){
-        ProblemResult problemResult = new ProblemResult(problemStateDto.getUser(), problemStateDto.getPlatform(), problemStateDto.getResultState(), problemStateDto.getName(), problemStateDto.getProblemId(), problemStateDto.getUrl());
+        LocalDate date = problemStateDto.getSolveDate().toLocalDate();
+        ProblemResult problemResult = new ProblemResult(problemStateDto.getUser(), problemStateDto.getPlatform(), problemStateDto.getResultState(), problemStateDto.getName(), problemStateDto.getProblemId(), problemStateDto.getUrl(),date);
         problemResultRepository.save(problemResult);
     }
 }

@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.example.algosolve.user.domain.User;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 public class ProblemStateDto {
@@ -14,5 +17,6 @@ public class ProblemStateDto {
     private String problemId;
     private String name;
     private String url;
+    private LocalDateTime solveDate;
 
 }

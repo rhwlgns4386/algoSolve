@@ -6,6 +6,8 @@ import org.example.algosolve.platform.Platform;
 import org.example.algosolve.platform.ResultState;
 import org.example.algosolve.user.domain.User;
 
+import java.time.LocalDate;
+
 @Entity
 @NoArgsConstructor
 public class ProblemResult {
@@ -22,13 +24,15 @@ public class ProblemResult {
     private String name;
     private String problemId;
     private String url;
+    private LocalDate solvedDate;
 
-    public ProblemResult(User user, Platform platform, ResultState resultState, String name, String problemId, String url) {
+    public ProblemResult(User user, Platform platform, ResultState resultState, String name, String problemId, String url, LocalDate solvedDate) {
         this.user = user;
         this.platform = platform;
         this.resultState = resultState;
         this.name = name;
         this.problemId = problemId;
         this.url = url;
+        this.solvedDate = solvedDate;
     }
 }
