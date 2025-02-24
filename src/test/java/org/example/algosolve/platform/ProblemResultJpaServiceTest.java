@@ -1,8 +1,8 @@
 package org.example.algosolve.platform;
 
 import jakarta.transaction.Transactional;
-import org.example.algosolve.problem_result.ProblemResultRepository;
-import org.example.algosolve.problem_result.ProblemResultJpaService;
+import org.example.algosolve.problem_result.service.ProblemResultRepository;
+import org.example.algosolve.problem_result.service.ProblemResultJpaService;
 import org.example.algosolve.user.TestUser;
 import org.example.algosolve.user.domain.User;
 import org.example.algosolve.user.domain.UserRepository;

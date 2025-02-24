@@ -1,7 +1,6 @@
 package org.example.algosolve.platform;
 
 import lombok.RequiredArgsConstructor;
-import org.example.algosolve.problem_result.ProblemResultJpaService;
 
 @RequiredArgsConstructor
 public class DelegateJob implements Runnable{

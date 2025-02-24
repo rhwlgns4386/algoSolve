@@ -1,4 +1,4 @@
-package org.example.algosolve.problem_result;
+package org.example.algosolve.problem_result.entity;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;

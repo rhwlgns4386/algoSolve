@@ -1,7 +1,5 @@
 package org.example.algosolve.platform;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.example.algosolve.user.domain.User;

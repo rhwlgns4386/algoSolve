@@ -1,4 +1,4 @@
-package org.example.algosolve.problem_result;
+package org.example.algosolve.problem_result.config;
 
 import lombok.RequiredArgsConstructor;
 import org.example.algosolve.platform.DelegateJob;
