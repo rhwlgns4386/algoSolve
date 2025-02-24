@@ -1,6 +1,8 @@
 package org.example.algosolve.platform;
 
 import jakarta.transaction.Transactional;
+import org.example.algosolve.problem_result.ProblemResultRepository;
+import org.example.algosolve.problem_result.ProblemResultJpaService;
 import org.example.algosolve.user.TestUser;
 import org.example.algosolve.user.domain.User;
 import org.example.algosolve.user.domain.UserRepository;
@@ -8,18 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.awt.*;
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class ProblemResultServiceTest {
+class ProblemResultJpaServiceTest {
 
     @Autowired
-    private ProblemResultService problemResultService;
+    private ProblemResultJpaService problemResultService;
     @Autowired
     private UserRepository userRepository;
     @Autowired

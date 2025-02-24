@@ -1,7 +1,9 @@
-package org.example.algosolve.platform;
+package org.example.algosolve.problem_result;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
+import org.example.algosolve.platform.Platform;
+import org.example.algosolve.platform.ResultState;
 import org.example.algosolve.user.domain.User;
 
 @Entity
@@ -18,7 +20,7 @@ public class ProblemResult {
     @Enumerated(value = EnumType.STRING)
     private ResultState resultState;
     private String name;
-    private Integer problemId;
+    private String problemId;
     private String url;
 
     public ProblemResult(User user, Platform platform, ResultState resultState, String name, String problemId, String url) {
@@ -26,7 +28,7 @@ public class ProblemResult {
         this.platform = platform;
         this.resultState = resultState;
         this.name = name;
-        this.problemId = Integer.parseInt(problemId);
+        this.problemId = problemId;
         this.url = url;
     }
 }
