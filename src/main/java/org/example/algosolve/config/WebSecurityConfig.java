@@ -120,7 +120,7 @@ public class WebSecurityConfig implements WebMvcConfigurer{
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000","https://www.acmicpc.net")
+                .allowedOrigins("http://localhost:3000","https://www.acmicpc.net","https://school.programmers.co.kr")
                 .allowedMethods("GET", "POST", "PUT", "DELETE","PATCH", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
