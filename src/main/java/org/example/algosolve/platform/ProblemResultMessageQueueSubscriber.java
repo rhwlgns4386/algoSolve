@@ -1,5 +1,5 @@
 package org.example.algosolve.platform;
 
-public interface AlgoSolvePlatformMessageQueue {
+public interface ProblemResultMessageQueueSubscriber {
     ProblemStateDto take();
 }

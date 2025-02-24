@@ -1,6 +1,5 @@
 package org.example.algosolve.platform;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +12,7 @@ import java.util.concurrent.Executors;
 @RequiredArgsConstructor
 public class ExecutorConfig {
 
-    private final AlgoSolvePlatformMessageQueue messageQueue;
+    private final ProblemResultMessageQueueSubscriber messageQueue;
     private final ProblemResultService problemResultService;
 
     @Bean(destroyMethod = "shutdown")

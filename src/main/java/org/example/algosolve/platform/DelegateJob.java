@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DelegateJob implements Runnable{
 
-    private final AlgoSolvePlatformMessageQueue messageQueue;
+    private final ProblemResultMessageQueueSubscriber messageQueue;
     private final ProblemResultService problemResultService;
 
     @Override

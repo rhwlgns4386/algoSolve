@@ -1,7 +1,7 @@
 package org.example.algosolve.in_memroy_queue;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.algosolve.platform.AlgoSolvePlatformMessageQueue;
+import org.example.algosolve.platform.ProblemResultMessageQueueSubscriber;
 import org.example.algosolve.platform.ProblemStateDto;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +10,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 @Component
 @Slf4j
-public class InMemoryMessageQueue implements AlgoSolvePlatformMessageQueue {
+public class InMemoryMessageQueue implements ProblemResultMessageQueueSubscriber, ProblemResultMessageQueueProvider {
 
     private BlockingQueue<ProblemStateDto> store;
 
@@ -33,6 +33,7 @@ public class InMemoryMessageQueue implements AlgoSolvePlatformMessageQueue {
         }
     }
 
+    @Override
     public void add(ProblemStateDto dto){
         store.add(dto);
     }
