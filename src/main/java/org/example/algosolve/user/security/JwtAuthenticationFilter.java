@@ -1,13 +1,13 @@
 package org.example.algosolve.user.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.example.algosolve.user.controller.TokenProvider;
+import org.example.algosolve.user.token.TokenProvider;
 import org.example.algosolve.user.token.TokenType;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @Slf4j
@@ -26,7 +26,7 @@ public class JwtAuthenticationFilter extends JwtExceptionHandleFilter {
         String token = tokenProvider.extractTokenFromHeader(request);
         validToken(token);
 
-        SecurityContextHolder.getContext().setAuthentication( tokenProvider.getAuthentication(token));
+        SecurityContextHolder.getContext().setAuthentication(tokenProvider.getAuthentication(token));
     }
 
     private void validToken(String token) {
@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends JwtExceptionHandleFilter {
         }
 
         if(!tokenProvider.checkType(tokenType, token)){
-            throw new IllegalArgumentException("잘못된 토큰이 입력되었습니다.");
+            throw new UnsupportedJwtException("잘못된 토큰이 입력되었습니다.");
         }
     }
 }

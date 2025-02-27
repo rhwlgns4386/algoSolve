@@ -117,7 +117,8 @@ class AuthControllerTest {
         String refresh = tokenEncoder.refresh(LocalDateTime.now(), user.getUserId());
         user.updateRefreshToken(refresh);
         mockMvc.perform(get(ISSUE_ACCESS_TOKEN).header(HttpHeaders.AUTHORIZATION,"Bearer "+refresh+1))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isUnauthorized())
+                .andDo(print());
     }
 
     @Test
@@ -126,7 +127,7 @@ class AuthControllerTest {
 
         String accessToken = tokenEncoder.accessToken(LocalDateTime.now(), user.getUserId());
         mockMvc.perform(get(ISSUE_ACCESS_TOKEN).header(HttpHeaders.AUTHORIZATION,"Bearer "+ accessToken))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test

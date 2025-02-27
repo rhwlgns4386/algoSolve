@@ -19,6 +19,7 @@ import org.example.algosolve.user.dto.TokenDto;
 import org.example.algosolve.user.exception.DuplicateUserIdException;
 import org.example.algosolve.user.service.AuthService;
 import org.example.algosolve.user.service.LoginInfo;
+import org.example.algosolve.user.token.TokenProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -71,7 +72,7 @@ public class AuthController {
     })
     public void checkId(@RequestBody IdDto idDto){
         if(authService.containId(idDto.getId())){
-            throw  new DuplicateUserIdException();
+            throw new DuplicateUserIdException();
         }
     }
 }

@@ -1,6 +1,6 @@
 package org.example.algosolve.user.security;
 
-import org.example.algosolve.user.controller.TokenProvider;
+import org.example.algosolve.user.token.TokenProvider;
 import org.example.algosolve.user.token.TokenType;
 
 public class TokenTypeChecker {

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.example.algosolve.user.domain.UserRepository;
 import org.example.algosolve.user.security.JpaUserDetailService;
-import org.example.algosolve.user.controller.TokenProvider;
+import org.example.algosolve.user.token.TokenProvider;
 import org.example.algosolve.user.security.JwtAuthenticationFilter;
 import org.example.algosolve.user.token.TokenType;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

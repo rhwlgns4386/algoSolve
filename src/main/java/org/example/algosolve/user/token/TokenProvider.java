@@ -1,11 +1,8 @@
-package org.example.algosolve.user.controller;
+package org.example.algosolve.user.token;
 
 import static org.example.algosolve.user.controller.TokenHeaderExtractor.extract;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -13,10 +10,6 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 import lombok.RequiredArgsConstructor;
-import org.example.algosolve.user.token.TokenDecoder;
-import org.example.algosolve.user.token.TokenEncoder;
-import org.example.algosolve.user.token.TokenType;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -65,12 +58,6 @@ public class TokenProvider {
     }
 
     private Claims getClaims(String token) {
-        try{
-            return tokenDecoder.decode(token);
-        }catch (ExpiredJwtException e){
-            throw new BadCredentialsException("기간이 만료되었습니다.");
-        }catch (SignatureException | MalformedJwtException e){
-            throw new BadCredentialsException("토큰이 손상되었습니다.");
-        }
+        return tokenDecoder.decode(token);
     }
 }
