@@ -43,6 +43,11 @@ public class TokenProvider {
         return extract(request);
     }
 
+    public boolean checkType(TokenType targetType,String token){
+        TokenType tokenType = extractTokenType(token);
+        return targetType == tokenType;
+    }
+
     public String extractUserId(String token) {
         Claims claims = getClaims(token);
         return claims.getSubject();

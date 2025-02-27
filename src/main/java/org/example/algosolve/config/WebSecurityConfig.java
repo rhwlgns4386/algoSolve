@@ -5,12 +5,10 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.example.algosolve.user.domain.UserRepository;
-import org.example.algosolve.user.security.ExceptionHandleFilter;
 import org.example.algosolve.user.security.JpaUserDetailService;
-import org.example.algosolve.user.security.JwtAuthenticationFilter;
 import org.example.algosolve.user.controller.TokenProvider;
+import org.example.algosolve.user.security.JwtAuthenticationFilter;
 import org.example.algosolve.user.token.TokenType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -35,9 +33,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class WebSecurityConfig implements WebMvcConfigurer{
+public class WebSecurityConfig implements WebMvcConfigurer {
 
     private final TokenProvider provider;
+    private final ObjectMapper objectMapper;
 
     @Bean
     @Order(4)
@@ -46,7 +45,7 @@ public class WebSecurityConfig implements WebMvcConfigurer{
 
         httpSecurity.authorizeHttpRequests(
                         (auth) -> auth.anyRequest().authenticated())
-                .addFilterAfter(new JwtAuthenticationFilter(provider, TokenType.ACCESS_TOKEN), ExceptionHandleFilter.class);
+                .addFilterAfter(new JwtAuthenticationFilter(provider, TokenType.ACCESS_TOKEN, objectMapper), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 
@@ -55,7 +54,7 @@ public class WebSecurityConfig implements WebMvcConfigurer{
     public SecurityFilterChain securityAuthFilterChain(HttpSecurity httpSecurity) throws Exception {
         defaultHttpSecurity(httpSecurity);
 
-        httpSecurity.securityMatcher("/auth/**","/swagger-ui/**","/v3/api-docs/**","/api/v1/problem");
+        httpSecurity.securityMatcher("/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/api/v1/problem");
         httpSecurity.authorizeHttpRequests(
                 (auth) -> auth.anyRequest().permitAll());
         return httpSecurity.build();
@@ -69,7 +68,7 @@ public class WebSecurityConfig implements WebMvcConfigurer{
         httpSecurity.securityMatcher("/auth/issued_access_token");
         httpSecurity.authorizeHttpRequests(
                         (auth) -> auth.anyRequest().authenticated())
-                .addFilterAfter(new JwtAuthenticationFilter(provider,TokenType.REFRESH_TOKEN), ExceptionHandleFilter.class);
+                .addFilterAfter(new JwtAuthenticationFilter(provider, TokenType.REFRESH_TOKEN, objectMapper), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 
@@ -103,8 +102,6 @@ public class WebSecurityConfig implements WebMvcConfigurer{
         return source;
     }
 
-    @Autowired
-    private final ObjectMapper objectMapper;
     private void defaultHttpSecurity(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .httpBasic(AbstractHttpConfigurer::disable)
@@ -114,14 +111,13 @@ public class WebSecurityConfig implements WebMvcConfigurer{
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
-        httpSecurity.addFilterBefore(new ExceptionHandleFilter(objectMapper),UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000","https://www.acmicpc.net","https://school.programmers.co.kr","https://leetcode.com")
-                .allowedMethods("GET", "POST", "PUT", "DELETE","PATCH", "OPTIONS")
+                .allowedOrigins("http://localhost:3000", "https://www.acmicpc.net", "https://school.programmers.co.kr", "https://leetcode.com")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
