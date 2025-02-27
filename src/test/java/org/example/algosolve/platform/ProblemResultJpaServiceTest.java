@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -32,7 +34,7 @@ class ProblemResultJpaServiceTest {
         String name = "testName";
         String url = "www.test.com";
 
-        problemResultService.save(new ProblemStateDto(user,platform, resultState, problemId, name, url));
+        problemResultService.save(new ProblemStateDto(user,platform, resultState, problemId, name, url, LocalDateTime.now()));
 
         assertThat(problemResultRepository.count()).isEqualTo(1);
     }
