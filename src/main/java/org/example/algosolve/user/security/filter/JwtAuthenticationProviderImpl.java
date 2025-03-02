@@ -1,33 +1,27 @@
-package org.example.algosolve.user.security;
+package org.example.algosolve.user.security.filter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.example.algosolve.user.token.TokenProvider;
 import org.example.algosolve.user.token.TokenType;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.context.SecurityContextHolder;
 
-@Slf4j
-public class JwtAuthenticationFilter extends JwtExceptionHandleFilter {
+@RequiredArgsConstructor
+public class JwtAuthenticationProviderImpl implements JwtAuthenticationProvider {
+
     private final TokenProvider tokenProvider;
     private final TokenType tokenType;
 
-    public JwtAuthenticationFilter(TokenProvider provider, TokenType tokenType, ObjectMapper objectMapper) {
-        super(objectMapper);
-        this.tokenProvider=provider;
-        this.tokenType = tokenType;
-    }
 
     @Override
-    protected void authenticationToken(HttpServletRequest request, HttpServletResponse response) {
+    public Result authenticationToken(HttpServletRequest request, HttpServletResponse response) {
         String token = tokenProvider.extractTokenFromHeader(request);
         validToken(token);
-
-        SecurityContextHolder.getContext().setAuthentication(tokenProvider.getAuthentication(token));
+        return new Result(tokenProvider.getAuthentication(token));
     }
+
 
     private void validToken(String token) {
         if(token == null){

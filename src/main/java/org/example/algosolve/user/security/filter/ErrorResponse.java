@@ -1,4 +1,4 @@
-package org.example.algosolve.user.security;
+package org.example.algosolve.user.security.filter;
 
 import lombok.Data;
 

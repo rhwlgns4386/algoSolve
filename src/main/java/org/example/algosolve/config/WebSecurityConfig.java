@@ -5,9 +5,12 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.example.algosolve.user.domain.UserRepository;
-import org.example.algosolve.user.security.JpaUserDetailService;
+import org.example.algosolve.user.security.filter.JwtAuthenticationExceptionProvider;
+import org.example.algosolve.user.security.filter.JwtAuthenticationFilter;
+import org.example.algosolve.user.security.filter.JwtAuthenticationProvider;
+import org.example.algosolve.user.security.filter.JwtAuthenticationProviderImpl;
+import org.example.algosolve.user.security.service.JpaUserDetailService;
 import org.example.algosolve.user.token.TokenProvider;
-import org.example.algosolve.user.security.JwtAuthenticationFilter;
 import org.example.algosolve.user.token.TokenType;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -45,7 +48,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 
         httpSecurity.authorizeHttpRequests(
                         (auth) -> auth.anyRequest().authenticated())
-                .addFilterAfter(new JwtAuthenticationFilter(provider, TokenType.ACCESS_TOKEN, objectMapper), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAfter(jwtExceptionHandleFilter(TokenType.ACCESS_TOKEN), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 
@@ -68,8 +71,13 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         httpSecurity.securityMatcher("/auth/issued_access_token");
         httpSecurity.authorizeHttpRequests(
                         (auth) -> auth.anyRequest().authenticated())
-                .addFilterAfter(new JwtAuthenticationFilter(provider, TokenType.REFRESH_TOKEN, objectMapper), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAfter(jwtExceptionHandleFilter(TokenType.REFRESH_TOKEN), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
+    }
+
+    private JwtAuthenticationFilter jwtExceptionHandleFilter(TokenType tokenType){
+        JwtAuthenticationProvider jwtAuthenticationProvider = new JwtAuthenticationExceptionProvider(new JwtAuthenticationProviderImpl(provider,tokenType));
+        return new JwtAuthenticationFilter(objectMapper,jwtAuthenticationProvider);
     }
 
     @Bean
