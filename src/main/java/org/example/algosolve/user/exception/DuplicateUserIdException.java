@@ -1,8 +1,6 @@
 package org.example.algosolve.user.exception;
 
-import org.springframework.security.core.AuthenticationException;
-
-public class DuplicateUserIdException extends AuthenticationException {
+public class DuplicateUserIdException extends Exception {
     private static final String MESSAGE = "아이디가 중복 됩니다.";
 
     public DuplicateUserIdException() {

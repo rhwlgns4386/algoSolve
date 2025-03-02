@@ -1,8 +1,8 @@
 package org.example.algosolve.in_memroy_queue;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.algosolve.platform.ProblemResultMessageQueueSubscriber;
-import org.example.algosolve.platform.ProblemStateDto;
+import org.example.algosolve.platform.message_queue_subscriber.ProblemResultMessageQueueSubscriber;
+import org.example.algosolve.platform.dto.ProblemStateDto;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.BlockingQueue;

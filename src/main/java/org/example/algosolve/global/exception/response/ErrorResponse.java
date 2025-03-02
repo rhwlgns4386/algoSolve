@@ -1,4 +1,4 @@
-package org.example.algosolve.global;
+package org.example.algosolve.global.exception.response;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import java.time.LocalDateTime;
@@ -8,22 +8,22 @@ import org.springframework.validation.FieldError;
 
 @Data
 public class ErrorResponse {
-    private int status;
+    private String status;
     @JsonUnwrapped
     private ErrorMessage errorMessage;
     private LocalDateTime occurredAt;
 
-    private ErrorResponse(int status, ErrorMessage errorMessage) {
+    private ErrorResponse(String status, ErrorMessage errorMessage) {
         this.status = status;
         this.errorMessage = errorMessage;
         this.occurredAt = LocalDateTime.now();
     }
 
-    static ErrorResponse of(int status, String message) {
+    public static ErrorResponse of(String status, String message) {
         return new ErrorResponse(status, new SingMessageErrorErrorMessage(message));
     }
 
-    static ErrorResponse of(int status, List<FieldError> errors) {
+    public static ErrorResponse of(String status, List<FieldError> errors) {
         return new ErrorResponse(status, new FieldErrorMessages(errors));
     }
 

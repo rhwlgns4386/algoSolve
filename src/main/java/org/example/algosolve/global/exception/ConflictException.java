@@ -1,4 +1,4 @@
-package org.example.algosolve.exception;
+package org.example.algosolve.global.exception;
 
 public class ConflictException extends RuntimeException{
     public ConflictException() {

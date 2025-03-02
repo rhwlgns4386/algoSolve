@@ -1,4 +1,4 @@
-package org.example.algosolve.global;
+package org.example.algosolve.global.exception.response;
 
 import java.util.HashMap;
 import java.util.List;

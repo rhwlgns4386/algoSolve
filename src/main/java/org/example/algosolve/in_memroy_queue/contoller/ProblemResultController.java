@@ -1,7 +1,9 @@
-package org.example.algosolve.in_memroy_queue;
+package org.example.algosolve.in_memroy_queue.contoller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.algosolve.in_memroy_queue.ProblemResultMessageQueueProvider;
+import org.example.algosolve.in_memroy_queue.dto.SaveProblemStateDto;
 import org.example.algosolve.user.domain.UserRepository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,15 +1,14 @@
-package org.example.algosolve.in_memroy_queue;
+package org.example.algosolve.in_memroy_queue.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.Getter;
-import org.example.algosolve.platform.Platform;
-import org.example.algosolve.platform.ProblemStateDto;
-import org.example.algosolve.platform.ResultState;
+import org.example.algosolve.platform.domain.Platform;
+import org.example.algosolve.platform.dto.ProblemStateDto;
+import org.example.algosolve.platform.domain.ResultState;
 import org.example.algosolve.user.domain.User;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter

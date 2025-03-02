@@ -1,6 +1,6 @@
-package org.example.algosolve.problem_result.service;
+package org.example.algosolve.platform.service;
 
-import org.example.algosolve.problem_result.entity.ProblemResult;
+import org.example.algosolve.platform.domain.ProblemResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProblemResultRepository extends JpaRepository<ProblemResult,Long> {

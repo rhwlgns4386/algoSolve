@@ -1,4 +1,4 @@
-package org.example.algosolve.platform;
+package org.example.algosolve.platform.domain;
 
 public enum ResultState {
     AC,

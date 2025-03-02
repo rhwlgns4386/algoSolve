@@ -1,9 +1,7 @@
-package org.example.algosolve.problem_result.entity;
+package org.example.algosolve.platform.domain;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
-import org.example.algosolve.platform.Platform;
-import org.example.algosolve.platform.ResultState;
 import org.example.algosolve.user.domain.User;
 
 import java.time.LocalDate;

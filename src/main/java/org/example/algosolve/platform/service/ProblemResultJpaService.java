@@ -1,10 +1,10 @@
-package org.example.algosolve.problem_result.service;
+package org.example.algosolve.platform.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.algosolve.platform.ProblemResultService;
-import org.example.algosolve.platform.ProblemStateDto;
-import org.example.algosolve.problem_result.entity.ProblemResult;
+import org.example.algosolve.platform.dto.ProblemStateDto;
+import org.example.algosolve.platform.domain.ProblemResult;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

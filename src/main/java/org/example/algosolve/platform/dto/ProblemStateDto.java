@@ -1,10 +1,11 @@
-package org.example.algosolve.platform;
+package org.example.algosolve.platform.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.example.algosolve.platform.domain.Platform;
+import org.example.algosolve.platform.domain.ResultState;
 import org.example.algosolve.user.domain.User;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter

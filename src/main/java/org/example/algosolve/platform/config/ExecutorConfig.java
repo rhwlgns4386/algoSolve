@@ -1,8 +1,8 @@
-package org.example.algosolve.problem_result.config;
+package org.example.algosolve.platform.config;
 
 import lombok.RequiredArgsConstructor;
-import org.example.algosolve.platform.DelegateJob;
-import org.example.algosolve.platform.ProblemResultMessageQueueSubscriber;
+import org.example.algosolve.platform.message_queue_subscriber.DelegateJob;
+import org.example.algosolve.platform.message_queue_subscriber.ProblemResultMessageQueueSubscriber;
 import org.example.algosolve.platform.ProblemResultService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

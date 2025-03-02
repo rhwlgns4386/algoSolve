@@ -6,9 +6,10 @@ import org.example.algosolve.user.domain.UserPasswordEncoder;
 import org.example.algosolve.user.domain.UserRepository;
 import org.example.algosolve.user.dto.SignupDto;
 import org.example.algosolve.user.exception.DuplicateUserIdException;
+import org.example.algosolve.user.exception.InvalidRefreshTokenException;
+import org.example.algosolve.user.exception.PasswordInValidException;
+import org.example.algosolve.user.exception.UserNotFoundException;
 import org.example.algosolve.user.token.TokenEncoder;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,17 +23,17 @@ public class AuthService {
     private final UserPasswordEncoder passwordEncoder;
     private final TokenEncoder tokenEncoder;
 
-    public LoginInfo login(LocalDateTime now, String id, String password){
-        User user = userRepository.findUserByUserId(id).orElseThrow(() -> new InternalAuthenticationServiceException("사용자를 찾을 수 없습니다."));
+    public LoginInfo login(LocalDateTime now, String id, String password) throws UserNotFoundException, PasswordInValidException {
+        User user = userRepository.findUserByUserId(id).orElseThrow(UserNotFoundException::new);
         if(!user.matchPassword(password, passwordEncoder)){
-            throw new BadCredentialsException("인증 정보가 일치 하지 않습니다.");
+            throw new PasswordInValidException();
         }
         String refreshToken = tokenEncoder.refresh(now, id);
         user.updateRefreshToken(refreshToken);
         return new LoginInfo(refreshToken,tokenEncoder.accessToken(now,id),user.getNickName());
     }
 
-    public void signup(SignupDto signupDto) {
+    public void signup(SignupDto signupDto) throws DuplicateUserIdException {
         if (userRepository.existsByUserId(signupDto.getUserId())) {
             throw new DuplicateUserIdException();
         }
@@ -40,9 +41,9 @@ public class AuthService {
         userRepository.save(user);
     }
 
-    public String issueAccessToken(LocalDateTime now, String id, String refreshToken) {
+    public String issueAccessToken(LocalDateTime now, String id, String refreshToken) throws InvalidRefreshTokenException {
         if(!isUserToken(id,refreshToken)){
-            throw new BadCredentialsException("인증 정보가 일치 하지 않습니다.");
+            throw new InvalidRefreshTokenException();
         }
         return tokenEncoder.accessToken(now,id);
     }
