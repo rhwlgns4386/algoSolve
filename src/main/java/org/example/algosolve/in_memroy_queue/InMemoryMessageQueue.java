@@ -1,20 +1,20 @@
 package org.example.algosolve.in_memroy_queue;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.algosolve.platform.message_queue_subscriber.ProblemResultMessageQueueSubscriber;
+import org.example.algosolve.in_memroy_queue.dto.Message;
 import org.example.algosolve.platform.dto.ProblemStateDto;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-@Component
 @Slf4j
-public class InMemoryMessageQueue implements ProblemResultMessageQueueSubscriber, ProblemResultMessageQueueProvider {
+@Component
+public class InMemoryMessageQueue implements MessageQueue {
 
-    private BlockingQueue<ProblemStateDto> store;
+    private BlockingQueue<Message> store;
 
-    public InMemoryMessageQueue(BlockingQueue<ProblemStateDto> store) {
+    public InMemoryMessageQueue(BlockingQueue<Message> store) {
         this.store = store;
     }
 
@@ -23,7 +23,7 @@ public class InMemoryMessageQueue implements ProblemResultMessageQueueSubscriber
     }
 
     @Override
-    public ProblemStateDto take() {
+    public Message take() {
         try {
             return store.take();
         } catch (InterruptedException e) {
@@ -34,7 +34,7 @@ public class InMemoryMessageQueue implements ProblemResultMessageQueueSubscriber
     }
 
     @Override
-    public void add(ProblemStateDto dto){
+    public void add(Message dto){
         store.add(dto);
     }
 }

@@ -1,17 +1,13 @@
-package org.example.algosolve.platform.dto;
+package org.example.algosolve.in_memroy_queue.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.example.algosolve.in_memroy_queue.dto.Message;
-import org.example.algosolve.platform.domain.Platform;
-import org.example.algosolve.platform.domain.ResultState;
 import org.example.algosolve.user.domain.User;
-
 import java.time.LocalDateTime;
 
-@Getter
 @AllArgsConstructor
-public class ProblemStateDto {
+@Getter
+public class Message {
 
     private User user;
     private Platform platform;
@@ -20,4 +16,5 @@ public class ProblemStateDto {
     private String name;
     private String url;
     private LocalDateTime solveDate;
+
 }
