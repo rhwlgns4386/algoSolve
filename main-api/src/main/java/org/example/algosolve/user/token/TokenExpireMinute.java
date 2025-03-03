@@ -1,0 +1,22 @@
+package org.example.algosolve.user.token;
+
+import org.example.algosolve.user.util.DateUtil;
+
+import java.time.LocalDateTime;
+import java.util.Date;
+
+public class TokenExpireMinute {
+    private final int tokenExpireMinute;
+
+    TokenExpireMinute(int tokenExpireMinute) {
+        this.tokenExpireMinute = tokenExpireMinute;
+    }
+
+    Date calculateExpirationDate(LocalDateTime now){
+        return DateUtil.toDate(now.plusMinutes(tokenExpireMinute));
+    }
+
+    public int toInt() {
+        return tokenExpireMinute;
+    }
+}
