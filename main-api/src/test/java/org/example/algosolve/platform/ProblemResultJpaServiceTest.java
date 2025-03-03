@@ -37,7 +37,7 @@ class ProblemResultJpaServiceTest {
         String name = "testName";
         String url = "www.test.com";
 
-        problemResultService.save(new ProblemStateDto(user,platform, resultState, problemId, name, url, LocalDateTime.now()));
+        problemResultService.save(new ProblemStateDto(1L,platform, resultState, problemId, name, url, LocalDateTime.now()));
 
         assertThat(problemResultRepository.count()).isEqualTo(1);
     }
