@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 application-token.yml
 application-jh-db.yml
+./main-api/src/main/resources/*.yml
 
 ### STS ###
 .apt_generated
@@ -37,3 +38,5 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
